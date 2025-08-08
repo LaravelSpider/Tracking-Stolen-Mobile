@@ -1,0 +1,73 @@
+{
+  "app": {
+    "name": "Stolen Phone Tracker",
+    "description": "Professional system for tracking stolen devices"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "search": "Search Device",
+    "devices": "My Devices",
+    "reports": "Reports",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of stolen devices tracking system",
+    "total_devices": "Total Devices",
+    "missing": "Missing",
+    "reported": "Reported",
+    "investigating": "Under Investigation",
+    "found": "Found",
+    "high_priority": "High Priority",
+    "recent_reports": "Recent Reports",
+    "monthly_reports": "Monthly Reports",
+    "view_all": "View All",
+    "reported_by": "Reported by"
+  },
+  "search": {
+    "title": "Search Device",
+    "description": "Enter IMEI number to check if device is reported stolen",
+    "imei_label": "IMEI Number",
+    "imei_placeholder": "Enter 15-digit IMEI number",
+    "imei_help": "IMEI is usually found in Settings > About Phone",
+    "search_button": "Search Device",
+    "searching": "Searching...",
+    "device_found": "⚠️ Device Found in Stolen Database",
+    "device_not_found": "✅ Device Not Found",
+    "brand": "Brand",
+    "model": "Model",
+    "status": "Status",
+    "reported_date": "Reported Date",
+    "contact_authorities": "Please contact local authorities immediately."
+  },
+  "devices": {
+    "title": "My Devices",
+    "add_device": "Report Stolen Device",
+    "no_devices": "No devices reported yet",
+    "imei": "IMEI",
+    "brand": "Brand",
+    "model": "Model",
+    "status": "Status",
+    "date_reported": "Date Reported",
+    "actions": "Actions"
+  },
+  "status": {
+    "missing": "Missing",
+    "reported": "Reported",
+    "investigating": "Under Investigation",
+    "found": "Found"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "phone": "Phone Number",
+    "organization": "Organization",
+    "role": "Role",
+    "user": "User",
+    "security_agency": "Security Agency"
+  }
+}

@@ -1,0 +1,59 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* RTL Support */
+.rtl {
+    direction: rtl;
+    font-family: 'Cairo', Arial, sans-serif;
+}
+
+.rtl .text-left {
+    text-align: right;
+}
+
+.rtl .text-right {
+    text-align: left;
+}
+
+.rtl .ml-3 {
+    margin-left: 0;
+    margin-right: 0.75rem;
+}
+
+.rtl .mr-3 {
+    margin-right: 0;
+    margin-left: 0.75rem;
+}
+
+/* Loading spinner */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
