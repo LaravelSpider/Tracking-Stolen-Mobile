@@ -1,7 +1,7 @@
 {
     "name": "stolen-phone-tracker",
     "version": "2.0.0",
-    "description": "\u0646\u0638\u0627\u0645 \u062a\u062a\u0628\u0639 \u0627\u0644\u0647\u0648\u0627\u062a\u0641 \u0627\u0644\u0645\u0633\u0631\u0648\u0642\u0629",
+    "description": "نظام تتبع الهواتف المسروقة",
     "private": true,
     "type": "module",
     "scripts": {
@@ -15,22 +15,22 @@
         "@vueuse/core": "^11.1.0",
         "axios": "^1.7.7",
         "pinia": "^2.2.4",
-        "vue": "^3.5.12",
+        "vue": "^3.2.47",
         "vue-i18n": "^10.0.4",
         "vue-router": "^4.4.5",
-        "vue3-toastify": "^0.2.3"
+        "vue3-toastify": "^0.2.8"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
         "@tailwindcss/forms": "^0.5.9",
+        "@tailwindcss/typography": "^0.5.16",
         "@vitejs/plugin-vue": "^4.5.0",
         "autoprefixer": "^10.4.20",
         "bootstrap": "^5.2.3",
-        "laravel-vite-plugin": "^2.0.0",
+        "laravel-vite-plugin": "^1.0.5",
         "postcss": "^8.4.47",
         "sass": "^1.56.1",
         "tailwindcss": "^3.4.14",
-        "vite": "^7.1.1",
-        "vue": "^3.2.37"
+        "vite": "^5.2.10"
     }
 }

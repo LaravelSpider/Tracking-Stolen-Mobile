@@ -1,4 +1,4 @@
-import { useAuthStore } from '../stores/auth'
+import { createRouter, createWebHistory } from 'vue-router'
 
 // Import components
 const Dashboard = () => import('../components/dashboard/Dashboard.vue')
@@ -9,7 +9,7 @@ const Login = () => import('../components/auth/Login.vue')
 const Register = () => import('../components/auth/Register.vue')
 const Profile = () => import('../components/profile/Profile.vue')
 
-export const routes = [
+const routes = [
   {
     path: '/',
     redirect: '/dashboard'
@@ -62,5 +62,12 @@ export const routes = [
     meta: { requiresGuest: true }
   },
 ]
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+
+export default router;
 
 // Router guards will be added in app.js

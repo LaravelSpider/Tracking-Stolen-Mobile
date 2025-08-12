@@ -6,34 +6,26 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import App from './App.vue';
+import { createPinia } from 'pinia';
+import { useAuthStore } from './stores/auth';
+import router from './router';
+const app = createApp(App);
+const pinia = createPinia();
 
-/**
- * Next, we will create a fresh Vue application instance. You may then begin
- * registering components with the application instance so they are ready
- * to use in your application's views. An example is included for you.
- */
+app.use(pinia);
+app.use(router);
 
-const app = createApp({});
+router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore()
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
-
-/**
- * Finally, we will attach the application instance to a HTML element with
- * an "id" attribute of "app". This element is included with the "auth"
- * scaffolding. Otherwise, you will need to add an element yourself.
- */
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+        next({ name: 'login' })
+    } else if (to.meta.requiresGuest && authStore.isAuthenticated) {
+        next({ name: 'dashboard' })
+    } else {
+        next()
+    }
+})
 
 app.mount('#app');

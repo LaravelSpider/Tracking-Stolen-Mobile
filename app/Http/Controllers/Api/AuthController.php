@@ -61,7 +61,8 @@ class AuthController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-
+        
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if (!$user->is_active) {
