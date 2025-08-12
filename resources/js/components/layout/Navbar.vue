@@ -9,7 +9,7 @@
                         <router-link to="/dashboard" class="flex items-center">
                             <DevicePhoneMobileIcon class="w-8 h-8 text-blue-600" />
                             <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                                {{ $t('app.name') }}
+                                {{ t('app.name') }}
                             </span>
                         </router-link>
                     </div>
@@ -20,21 +20,21 @@
                             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 transition-colors border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                             active-class="text-gray-900 border-blue-500 dark:text-white">
                             <ChartBarIcon class="w-4 h-4 mr-2" />
-                            {{ $t('nav.dashboard') }}
+                            {{ t('nav.dashboard') }}
                         </router-link>
 
                         <router-link to="/search"
                             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 transition-colors border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                             active-class="text-gray-900 border-blue-500 dark:text-white">
                             <MagnifyingGlassIcon class="w-4 h-4 mr-2" />
-                            {{ $t('nav.search') }}
+                            {{ t('nav.search') }}
                         </router-link>
 
                         <router-link v-if="authStore.isAuthenticated" to="/devices"
                             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 transition-colors border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                             active-class="text-gray-900 border-blue-500 dark:text-white">
                             <DevicePhoneMobileIcon class="w-4 h-4 mr-2" />
-                            {{ $t('nav.devices') }}
+                            {{ t('nav.devices') }}
                         </router-link>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                                             'flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300'
                                         ]">
                                             <UserIcon class="w-4 h-4 mr-3" />
-                                            {{ $t('nav.profile') }}
+                                            {{ t('nav.profile') }}
                                         </router-link>
                                         </MenuItem>
 
@@ -89,7 +89,7 @@
                                             'flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300'
                                         ]">
                                             <DocumentTextIcon class="w-4 h-4 mr-3" />
-                                            {{ $t('nav.reports') }}
+                                            {{ t('nav.reports') }}
                                         </router-link>
                                         </MenuItem>
 
@@ -99,7 +99,7 @@
                                             'flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300'
                                         ]">
                                             <ArrowRightOnRectangleIcon class="w-4 h-4 mr-3" />
-                                            {{ $t('nav.logout') }}
+                                            {{ t('nav.logout') }}
                                         </button>
                                         </MenuItem>
                                     </div>
@@ -110,11 +110,11 @@
                     <div v-else class="flex items-center space-x-2" :class="{ 'space-x-reverse': isRTL }">
                         <router-link to="/login"
                             class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white">
-                            {{ $t('auth.login') }}
+                            {{ t('auth.login') }}
                         </router-link>
                         <router-link to="/register"
                             class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-md hover:bg-blue-700">
-                            {{ $t('auth.register') }}
+                            {{ t('auth.register') }}
                         </router-link>
                     </div>
 
@@ -137,21 +137,21 @@
                     class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                     active-class="text-blue-700 border-blue-500 bg-blue-50 dark:bg-blue-900 dark:text-blue-200"
                     @click="mobileMenuOpen = false">
-                    {{ $t('nav.dashboard') }}
+                    {{ t('nav.dashboard') }}
                 </router-link>
 
                 <router-link to="/search"
                     class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                     active-class="text-blue-700 border-blue-500 bg-blue-50 dark:bg-blue-900 dark:text-blue-200"
                     @click="mobileMenuOpen = false">
-                    {{ $t('nav.search') }}
+                    {{ t('nav.search') }}
                 </router-link>
 
                 <router-link v-if="authStore.isAuthenticated" to="/devices"
                     class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                     active-class="text-blue-700 border-blue-500 bg-blue-50 dark:bg-blue-900 dark:text-blue-200"
                     @click="mobileMenuOpen = false">
-                    {{ $t('nav.devices') }}
+                    {{ t('nav.devices') }}
                 </router-link>
             </div>
         </div>
@@ -181,10 +181,11 @@ import ThemeToggle from '../ui/ThemeToggle.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
-const i18nStore = useI18nStore()
+const i18n = useI18nStore()
+const t = i18n.t
 
 const mobileMenuOpen = ref(false)
-const isRTL = computed(() => i18nStore.currentLocale === 'ar')
+const isRTL = computed(() => i18n.currentLocale === 'ar')
 
 const handleLogout = async () => {
     try {

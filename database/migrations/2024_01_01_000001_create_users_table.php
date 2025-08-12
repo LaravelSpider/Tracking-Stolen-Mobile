@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('locale', 5)->default('en');
             $table->string('timezone')->default('UTC');
+            $table->string('role');
             $table->rememberToken();
             $table->timestamps();
 

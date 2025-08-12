@@ -1,72 +1,31 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth';
+import routes from './routes';
 
-// Import components
-const Dashboard = () => import('../components/dashboard/Dashboard.vue')
-const DeviceSearch = () => import('../components/search/DeviceSearch.vue')
-const DeviceList = () => import('../components/devices/DeviceList.vue')
-const DeviceForm = () => import('../components/devices/DeviceForm.vue')
-const Login = () => import('../components/auth/Login.vue')
-const Register = () => import('../components/auth/Register.vue')
-const Profile = () => import('../components/profile/Profile.vue')
-
-const routes = [
-  {
-    path: '/',
-    redirect: '/dashboard'
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: Dashboard,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/search',
-    name: 'search',
-    component: DeviceSearch
-  },
-  {
-    path: '/devices',
-    name: 'devices',
-    component: DeviceList,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/devices/create',
-    name: 'device-create',
-    component: DeviceForm,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/devices/:id/edit',
-    name: 'device-edit',
-    component: DeviceForm,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: Profile,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    meta: { requiresGuest: true }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register,
-    meta: { requiresGuest: true }
-  },
-]
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
+
+router.beforeEach((to) => {
+  const authStore = useAuthStore()
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    return { name: 'login' }
+  } 
+  
+  if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    return { name: 'dashboard' }
+  }
+  return
+})
+
+// 3. REGISTER ERROR HANDLER (put this right after router creation)
+router.onError((error) => {
+  console.error('Router error:', error)
+  // Optional: Send errors to error tracking service (Sentry, etc.)
+})
 
 export default router;
 
