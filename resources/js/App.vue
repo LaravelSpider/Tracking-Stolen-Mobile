@@ -12,8 +12,6 @@
 import { computed, onMounted } from 'vue'
 import { useAuthStore } from './stores/auth'
 import { useI18nStore } from './stores/i18n'
-import Navbar from './components/layout/Navbar.vue'
-import Toast from './components/ui/Toast.vue'
 
 const authStore = useAuthStore()
 const i18nStore = useI18nStore()

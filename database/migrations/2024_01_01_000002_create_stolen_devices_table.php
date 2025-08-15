@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('brand', 50);
             $table->string('model', 100);
             $table->string('color', 30)->nullable();
-            $table->enum('status', ['missing', 'reported', 'investigating', 'found'])->default('missing');
+            $table->enum('status', ['missing', 'reported', 'investigating', 'found', 'recovered'])->default('missing');
             $table->date('lost_date');
             $table->text('description')->nullable();
             $table->string('loss_location')->nullable();

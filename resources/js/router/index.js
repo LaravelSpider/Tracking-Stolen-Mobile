@@ -7,18 +7,35 @@ const router = createRouter({
   routes,
 });
 
-
-router.beforeEach((to) => {
+// Navigation guards
+router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
 
+  // Check if route requires authentication
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    return { name: 'login' }
-  } 
-  
-  if (to.meta.requiresGuest && authStore.isAuthenticated) {
-    return { name: 'dashboard' }
+    next("/login")
+    return
   }
-  return
+
+  // Check if route requires guest (not authenticated)
+  if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    next("/dashboard")
+    return
+  }
+
+  // Check role-based access
+  if (to.meta.requiresRole && authStore.isAuthenticated) {
+    const userRole = authStore.user?.role
+    const requiredRoles = Array.isArray(to.meta.requiresRole) ? to.meta.requiresRole : [to.meta.requiresRole]
+
+    if (!requiredRoles.includes(userRole)) {
+      // Redirect to dashboard if user doesn't have required role
+      next("/dashboard")
+      return
+    }
+  }
+
+  next()
 })
 
 // 3. REGISTER ERROR HANDLER (put this right after router creation)

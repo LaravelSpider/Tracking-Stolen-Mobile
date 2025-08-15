@@ -4,6 +4,8 @@ import en from './locales/en.json'
 
 export const useI18nStore = defineStore('i18n', {
   state: () => ({
+    legacy: false,
+    globalInjection: true,
     currentLocale: localStorage.getItem('locale') || 'ar',
     locales: ['ar', 'en'],
     translations: {

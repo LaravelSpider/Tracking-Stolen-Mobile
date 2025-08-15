@@ -34,8 +34,8 @@ const i18nStore = useI18nStore()
 const showDropdown = ref(false)
 
 const languages = [
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ar', name: 'العربية', flag: 'SD' },
+  { code: 'en', name: 'English', flag: 'US' },
 ]
 
 const currentLocale = computed(() => i18nStore.currentLocale)

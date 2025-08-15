@@ -64,6 +64,7 @@ class AuthController extends Controller
         
         /** @var \App\Models\User $user */
         $user = Auth::user();
+        // $user = auth()->user();
 
         if (!$user->is_active) {
             throw ValidationException::withMessages([
@@ -84,7 +85,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request)
     {
         // Delete current token
         $request->user()->currentAccessToken()->delete();

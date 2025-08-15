@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\StolenDevice;
 use App\Models\User;
 use App\Notifications\DeviceMatchFound;
-use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class StolenDeviceController extends Controller
 {
@@ -89,14 +90,14 @@ class StolenDeviceController extends Controller
 
         $device = StolenDevice::create([
             ...$validated,
-            'reported_by' => auth()->id(),
+            'reported_by' => Auth::user()->id,
             'images' => $imagePaths,
             'priority' => $validated['priority'] ?? 1,
         ]);
 
         // Log activity
         activity()
-            ->causedBy(auth()->user())
+            ->causedBy(Auth::user())
             ->performedOn($device)
             ->log('Device reported as stolen');
 
@@ -108,7 +109,8 @@ class StolenDeviceController extends Controller
 
     public function show(StolenDevice $device): JsonResponse
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         
         // Check permissions
         if (!$user->hasAnyRole(['admin', 'security_agency']) && $device->reported_by !== $user->id) {
@@ -120,7 +122,8 @@ class StolenDeviceController extends Controller
 
     public function update(Request $request, StolenDevice $device): JsonResponse
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         
         // Check permissions
         if (!$user->hasAnyRole(['admin', 'security_agency']) && $device->reported_by !== $user->id) {
@@ -159,7 +162,8 @@ class StolenDeviceController extends Controller
 
     public function destroy(StolenDevice $device): JsonResponse
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         
         // Only admin or device owner can delete
         if (!$user->hasRole('admin') && $device->reported_by !== $user->id) {
@@ -196,7 +200,7 @@ class StolenDeviceController extends Controller
         if ($device) {
             // Log search activity
             activity()
-                ->causedBy(auth()->user())
+                ->causedBy(Auth::user())
                 ->performedOn($device)
                 ->log('Device searched by IMEI');
 
@@ -215,35 +219,35 @@ class StolenDeviceController extends Controller
 
     public function dashboard(): JsonResponse
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         
-        $query = StolenDevice::query();
-        
+        $baseQuery = StolenDevice::query();
         // Filter by user role
         if (!$user->hasAnyRole(['admin', 'security_agency'])) {
-            $query->where('reported_by', $user->id);
+                (clone $baseQuery)->where('reported_by', $user->id);
         }
-
+        
         $stats = [
-            'total_devices' => $query->count(),
-            'missing' => $query->byStatus('missing')->count(),
-            'reported' => $query->byStatus('reported')->count(),
-            'investigating' => $query->byStatus('investigating')->count(),
-            'found' => $query->byStatus('found')->count(),
-            'high_priority' => $query->highPriority()->count(),
-            'recent_reports' => $query->with(['reporter:id,name,email'])
+            'total_devices' => (clone $baseQuery)->count(),
+            'missing' => (clone $baseQuery)->byStatus('missing')->count(),
+            'reported' => (clone $baseQuery)->byStatus('reported')->count(),
+            'investigating' => (clone $baseQuery)->byStatus('investigating')->count(),
+            'found' => (clone $baseQuery)->byStatus('found')->count(),
+            'high_priority' => (clone $baseQuery)->highPriority()->count(),
+            'recent_reports' => (clone $baseQuery)->with(['reporter:id,name,email'])
                                    ->orderBy('created_at', 'desc')
                                    ->limit(5)
                                    ->get(),
-            'monthly_stats' => $this->getMonthlyStats($query),
+            'monthly_stats' => $this->getMonthlyStats(clone $baseQuery),
         ];
-
         return response()->json($stats);
     }
 
     public function generateReport(Request $request): \Illuminate\Http\Response
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         
         if (!$user->hasAnyRole(['admin', 'security_agency'])) {
             abort(403, 'Unauthorized');

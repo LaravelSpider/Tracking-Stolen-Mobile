@@ -6,6 +6,7 @@ const DeviceForm = () => import('../components/devices/DeviceForm.vue')
 const Login = () => import('../components/auth/Login.vue')
 const Register = () => import('../components/auth/Register.vue')
 const Profile = () => import('../components/profile/Profile.vue')
+const Reports = () => import('../components/Reports/Reports.vue')
 
 const routes =  [
     {
@@ -31,13 +32,13 @@ const routes =  [
     },
     {
         path: '/devices/create',
-        name: 'device-create',
+        name: 'DeviceCreate',
         component: DeviceForm,
         meta: { requiresAuth: true }
     },
     {
         path: '/devices/:id/edit',
-        name: 'device-edit',
+        name: 'DeviceEdit',
         component: DeviceForm,
         meta: { requiresAuth: true }
     },
@@ -46,6 +47,12 @@ const routes =  [
         name: 'profile',
         component: Profile,
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/reports',
+        name: 'reports',
+        component: Reports,
+        meta: { requiresAuth: true, requiresRole: ["admin", "security_agency"] }
     },
     {
         path: '/login',

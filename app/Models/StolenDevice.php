@@ -6,11 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class StolenDevice extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['imei', 'status', 'priority']) // Fields you want to log
+            ->logOnlyDirty() // Only log changed fields
+            ->dontSubmitEmptyLogs()
+            ->logFillable(); // Or use logAll() to log all attributes
+    }
+    
     protected $fillable = [
         'imei',
         'serial_number',

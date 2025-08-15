@@ -1,5 +1,5 @@
 <template>
-   Toast container is handled by vue3-toastify 
+  Toast container is handled by vue3-toastify
   <div></div>
 </template>
 

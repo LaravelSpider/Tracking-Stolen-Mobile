@@ -3,7 +3,10 @@
     "name": "نظام تتبع الهواتف المسروقة",
     "description": "نظام احترافي لتتبع الأجهزة المسروقة"
   },
-  "nav": {
+  "nav": {    
+    "home": "الرئيسية",
+    "about": "عن النظام",
+    "contact": "اتصل بنا",
     "dashboard": "لوحة التحكم",
     "search": "البحث عن جهاز",
     "devices": "أجهزتي",
@@ -131,9 +134,16 @@
   },
   "status": {
     "missing": "مفقود",
+    "recovered": "تم العثور عليه",
     "reported": "تم الإبلاغ عنه",
     "investigating": "قيد التحقيق",
-    "found": "تم العثور عليه"
+    "resolved": "منتهية",
+    "pending": "معلق",
+    "rejected": "مُرفوض",
+    "closed": "مغلقة",
+    "archived": "مؤرشفة",
+    "open": "مفتوح",
+    "in_progress": "قيد التنفيذ"
   },
   "common": {
     "loading": "جاري التحميل",
@@ -153,5 +163,64 @@
     "results": "نتيجة",
     "previous": "السابق",
     "next": "التالي"
-  }
+  },
+  "dashboard": {
+  "title": "الرئيسية",
+  "subtitle": "نظرة عامة علي نشاط النظام",
+  "welcome": "مرحبًا بك في لوحة التحكم",
+  "description": "مرحبًا بك في لوحة التحكم الخاصة بنا. هنا يمكنك التحكم بالتنبيهات والمعلومات المهمة حول الأجهزة المسروقة.",
+  "recent_devices": "أجهزة جديدة",
+  "recent_devices_description": "أجهزة جديدة التي تم إبلاغها مؤخراً",
+  "view_all": "عرض الكل",
+  "recent_reports": "التقارير الحالية",
+  "monthly_reports": "التقارير الشهرية",
+  "total_devices": "العدد الكلي",
+  "missing": "مفقود",
+  "reported": "مبلغ عنه",
+  "investigating": "قيد التحقيق",
+  "found": "تم العثور عليه",
+  "high_priority": "أجهزة هامة",
+  "reported_by": "تم الإبلاغ عنها من قبل",
+  "no_reports": "لا توجد تقارير",
+  "no_reports_description": "لم يتم الإبلاغ عن أي أجهزة بعد"
+  },
+  "search": {
+    "title": "البحث عن جهاز",
+    "description": "البحث عن جهاز مسروق",
+    "search_placeholder": "ابحث عن جهاز برقم IMEI أو الرقم التسلسلي",
+    "no_results": "لا توجد نتائج"
+  },
+  "reports": {
+    "title": "التقارير",
+    "subtitle": "إدارة ومراقبة تقارير الأجهزة المسروقة",
+    "noReports": "لا توجد تقارير",
+    "noReportsDesc": "لم يتم العثور على أي تقارير بالمعايير المحددة",
+    "reporter": "المبلغ",
+    "reportedDate": "تاريخ الإبلاغ",
+    "export": "تصدير التقارير",
+    "exportSuccess": "تم تصدير التقارير بنجاح",
+    "statusUpdated": "تم تحديث الحالة بنجاح",
+    "stats": {
+      "total": "إجمالي التقارير",
+      "pending": "قيد الانتظار",
+      "resolved": "تم الحل",
+      "thisMonth": "هذا الشهر"
+    }
+  },
+  "filters": {
+      "status": "الحالة",
+      "allStatuses": "جميع الحالات",
+      "dateFrom": "من تاريخ",
+      "dateTo": "إلى تاريخ"
+    },
+    "table": {
+      "device": "الجهاز",
+      "status": "الحالة",
+      "reporter": "المبلغ",
+      "date": "التاريخ",
+      "actions": "الإجراءات"
+    },
+    "stats": {
+      "fromLastMonth": "من الشهر الماضي"
+    }
 }

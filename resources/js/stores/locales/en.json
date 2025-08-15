@@ -54,9 +54,17 @@
   },
   "status": {
     "missing": "Missing",
+    "recovered": "Recovered",
     "reported": "Reported",
     "investigating": "Under Investigation",
-    "found": "Found"
+    "found": "Found",
+    "closed": "Closed",
+    "resolved": "Resolved",
+    "pending": "Pending",
+    "rejected": "Rejected",
+    "archived": "Archived",
+    "open": "Open",
+    "in_progress": "In Progress"
   },
   "auth": {
     "login": "Login",
@@ -69,5 +77,35 @@
     "role": "Role",
     "user": "User",
     "security_agency": "Security Agency"
-  }
+  },
+  "reports": {
+    "title": "Reports",
+    "subtitle": "Manage and monitor stolen device reports",
+    "noReports": "No reports found",
+    "noReportsDesc": "No reports found matching the specified criteria",
+    "reporter": "Reporter",
+    "reportedDate": "Reported Date",
+    "export": "Export Reports",
+    "exportSuccess": "Reports exported successfully",
+    "statusUpdated": "Status updated successfully",
+    "stats": {
+      "total": "Total Reports",
+      "pending": "Pending",
+      "resolved": "Resolved",
+      "thisMonth": "This Month"
+    }
+  },
+  "filters": {
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "dateFrom": "Date From",
+      "dateTo": "Date To"
+    },
+    "table": {
+      "device": "Device",
+      "status": "Status",
+      "reporter": "Reporter",
+      "date": "Date",
+      "actions": "Actions"
+    }
 }

@@ -1,8 +1,11 @@
 import axios from "axios"
 
 // Configure axios defaults
-axios.defaults.baseURL = "/api"
-axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
+// axios.defaults.baseURL = "/api"
+// axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
+axios.defaults.baseURL = 'http://localhost:8000/api'
+axios.defaults.withCredentials = true
+axios.defaults.headers.common['Accept'] = 'application/json'
 
 // Add auth token to requests
 axios.interceptors.request.use((config) => {
@@ -42,7 +45,7 @@ export const devicesApi = {
 }
 
 export const dashboardApi = {
-    getStats: () => axios.get("/dashboard").then((res) => res.data),
+    getStats: () => axios.get("/auth/dashboard").then((res) => (res.data)),   
 }
 
 export const searchApi = {
@@ -67,6 +70,7 @@ export const profileApi = {
 }
 
 export default {
+    axios,
     auth: authApi,
     devices: devicesApi,
     dashboard: dashboardApi,

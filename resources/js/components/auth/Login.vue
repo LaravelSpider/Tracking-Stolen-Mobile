@@ -1,6 +1,6 @@
 
 <template>
-  <div class="login-container">
+  <div v-if="!isAuthenticated" class="login-container">
     <h1>{{ t('auth.login') }}</h1>
     <form @submit.prevent="handleLogin">
       <div>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18nStore } from '@/stores/i18n'
 import { useAuthStore } from '@/stores/auth'
@@ -29,6 +29,7 @@ const router = useRouter()
 
 const i18n = useI18nStore()
 const t = i18n.t
+const isAuthenticated = computed(() => authStore.isAuthenticated)
 
 const email = ref('')
 const password = ref('')

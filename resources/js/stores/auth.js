@@ -2,12 +2,27 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { toast } from 'vue3-toastify'
 
+axios.defaults.baseURL = 'http://localhost:8000/api'
+axios.defaults.withCredentials = true
+axios.defaults.headers.common['Accept'] = 'application/json'
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
-    token: localStorage.getItem('token'),
+    token: null,  //localStorage.getItem('token')
     loading: false,
+    error: null,
   }),
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'auth',
+        storage: localStorage,
+        paths: ['token', 'user'],
+      },
+    ],
+  },
 
   getters: {
     isAuthenticated: (state) => !!state.token && !!state.user,
@@ -18,18 +33,28 @@ export const useAuthStore = defineStore('auth', {
     userName: (state) => state.user?.name ?? '',
     userEmail: (state) => state.user?.email ?? '',
   },
-
+  // getters: {
+  //   isAuthenticated: (state) => !!state.token && !!state.user,
+  //   isAdmin: (state) => state.user?.role === 'admin',
+  //   isSecurityAgency: (state) => state.user?.role === 'security_agency',
+  //   isUser: (state) => state.user?.role === 'user',
+  //   userRole: (state) => state.user?.role ?? 'guest',
+  //   userName: (state) => state.user?.name ?? '',
+  //   userEmail: (state) => state.user?.email ?? '',
+  // },
   actions: {
     async login(credentials) {
       this.loading = true
-      
+      this.error = null      
       try {
-        const response = await axios.post('/api/auth/login', credentials)
+        await axios.get('/sanctum/csrf-cookie')
+        const response = await axios.post('/auth/login', credentials)
         
         this.token = response.data.token
         this.user = response.data.user
         
         localStorage.setItem('token', this.token)
+        // localStorage.setItem('user', this.user)
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         
         toast.success('تم تسجيل الدخول بنجاح!', {
@@ -54,7 +79,7 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       
       try {
-        const response = await axios.post('/api/auth/register', userData)
+        const response = await axios.post('/auth/register', userData)
         
         this.token = response.data.token
         this.user = response.data.user
@@ -83,7 +108,7 @@ export const useAuthStore = defineStore('auth', {
     async logout() {
       try {
         if (this.token) {
-          await axios.post('/api/auth/logout')
+          await axios.post('/auth/logout')
         }
         toast.success('تم تسجيل الخروج بنجاح', {
           position: 'top-right',
@@ -101,7 +126,7 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
-        const response = await axios.get('/api/auth/user')
+        const response = await axios.get('/auth/user')
         this.user = response.data
         return true
       } catch (error) {
@@ -122,5 +147,13 @@ export const useAuthStore = defineStore('auth', {
         this.user = { ...this.user, ...userData }
       }
     },
+    async fetchUser() {
+      try {
+        const res = await axios.get('/auth/user')
+        this.user = res.data
+      } catch (err) {
+        this.user = null
+      }
+    }
   },
 })

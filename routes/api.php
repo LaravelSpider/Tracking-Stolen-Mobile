@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\StolenDeviceController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\ReportsController;
+use App\Http\Controllers\Api\StolenDeviceController;
 use Illuminate\Support\Facades\Route;
+
 
 // Public routes
 Route::prefix('auth')->group(function () {
@@ -13,7 +15,7 @@ Route::prefix('auth')->group(function () {
 });
 
 // Protected routes
-Route::middleware('auth:sanctum')->group(function () {
+Route::prefix('auth')->middleware('auth:sanctum')->group(function () {
     // Auth routes
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
@@ -32,8 +34,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // Devices
     Route::apiResource('devices', StolenDeviceController::class);
 
-    // Reports (Security agencies and admins only)
-    Route::middleware('role:security_agency,admin')->group(function () {
-        Route::get('/reports/devices', [StolenDeviceController::class, 'generateReport']);
-    });
+ // Reports routes
+ Route::get('/reports', [ReportsController::class, 'index']);
+ Route::get('/reports/stats', [ReportsController::class, 'stats']);
+ Route::get('/reports/export', [ReportsController::class, 'export']);
+ 
+ // Reports management (Security agencies and admins only)
+ Route::middleware('role:security_agency,admin')->group(function () {
+     Route::put('/reports/{id}/status', [ReportsController::class, 'updateStatus']);
+ });
 });

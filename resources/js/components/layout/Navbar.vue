@@ -1,20 +1,20 @@
 <template>
-    <nav class="bg-white border-b border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <nav v-if="isAuthenticated" class="bg-white border-b border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                Logo and Navigation
+                <!-- Logo and Navigation -->
                 <div class="flex">
-                    Logo
+                    <!-- Logo -->
                     <div class="flex items-center flex-shrink-0">
                         <router-link to="/dashboard" class="flex items-center">
                             <DevicePhoneMobileIcon class="w-8 h-8 text-blue-600" />
-                            <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">
+                            <span class="ml-2 text-xl font-bold text-red-600 dark:text-red-400">
                                 {{ t('app.name') }}
                             </span>
                         </router-link>
                     </div>
 
-                    Navigation Links
+                    <!-- Navigation Links -->
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8" :class="{ 'sm:space-x-reverse': isRTL }">
                         <router-link to="/dashboard"
                             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 transition-colors border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
@@ -30,7 +30,7 @@
                             {{ t('nav.search') }}
                         </router-link>
 
-                        <router-link v-if="authStore.isAuthenticated" to="/devices"
+                        <router-link v-if="isAuthenticated" to="/devices"
                             class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 transition-colors border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                             active-class="text-gray-900 border-blue-500 dark:text-white">
                             <DevicePhoneMobileIcon class="w-4 h-4 mr-2" />
@@ -39,16 +39,16 @@
                     </div>
                 </div>
 
-                Right side
+                <!-- Right side -->
                 <div class="flex items-center space-x-4" :class="{ 'space-x-reverse': isRTL }">
-                    Language Switcher
+                    <!-- Language Switcher -->
                     <LanguageSwitcher />
 
-                    Theme Toggle
+                    <!-- Theme Toggle -->
                     <ThemeToggle />
 
-                    User Menu
-                    <div v-if="authStore.isAuthenticated" class="relative">
+                    <!-- User Menu -->
+                    <div v-if="isAuthenticated" class="relative">
                         <Menu as="div" class="relative inline-block text-left">
                             <div>
                                 <MenuButton
@@ -118,7 +118,7 @@
                         </router-link>
                     </div>
 
-                    Mobile menu button
+                    <!-- Mobile menu button -->
                     <div class="sm:hidden">
                         <button @click="mobileMenuOpen = !mobileMenuOpen"
                             class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        Mobile menu
+        <!-- Mobile menu -->
         <div v-show="mobileMenuOpen" class="sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <router-link to="/dashboard"
@@ -147,7 +147,7 @@
                     {{ t('nav.search') }}
                 </router-link>
 
-                <router-link v-if="authStore.isAuthenticated" to="/devices"
+                <router-link v-if="isAuthenticated" to="/devices"
                     class="block py-2 pl-3 pr-4 text-base font-medium text-gray-500 border-l-4 border-transparent hover:text-gray-700 hover:border-gray-300 dark:text-gray-300 dark:hover:text-white"
                     active-class="text-blue-700 border-blue-500 bg-blue-50 dark:bg-blue-900 dark:text-blue-200"
                     @click="mobileMenuOpen = false">
@@ -183,10 +183,9 @@ const router = useRouter()
 const authStore = useAuthStore()
 const i18n = useI18nStore()
 const t = i18n.t
-
+const isAuthenticated = computed(() => authStore.isAuthenticated)
 const mobileMenuOpen = ref(false)
 const isRTL = computed(() => i18n.currentLocale === 'ar')
-
 const handleLogout = async () => {
     try {
         await authStore.logout()
